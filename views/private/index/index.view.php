@@ -1,0 +1,1 @@
+<?php include APP_PATH . '/views/templates/head.view.php'?>

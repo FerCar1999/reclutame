@@ -1,0 +1,24 @@
+<?php
+ob_start();
+session_start();
+ini_set("date.timezone", "America/El_Salvador");
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?= $title ?? '' ?></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="<?= WEB_PATH ?>css/materialize.css">
+    <link rel="stylesheet" href="<?= WEB_PATH ?>css/glide.core.min.css">
+    <link rel="stylesheet" href="<?= WEB_PATH ?>css/glide.theme.min.css">
+    <link rel="stylesheet" href="<?= WEB_PATH ?>css/style.css">
+    <script src="<?= WEB_PATH ?>js/jquery.min.js"></script>
+    <script src="<?= WEB_PATH ?>js/materialize.min.js"></script>
+    <script src="<?= WEB_PATH ?>js/initialize.js"></script>
+</head>
+
+<body class="white">
