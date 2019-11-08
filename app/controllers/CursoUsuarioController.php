@@ -16,7 +16,7 @@ try {
         switch ($_POST['accion']) {
             case 'crear':
                 if ($x->setCodiUsua($_SESSION['codi_usua'])) {
-                    if ($x->setCodiInsti($_POST['codiInsti'])) {
+                    if ($x->setCodiInst($_POST['codiInst'])) {
                         if ($x->setNombCurs($_POST['nombCurs'])) {
                             if ($x->setFechCurs($_POST['fechCurs'])) {
                                 if (is_uploaded_file($_FILES['archCurs']['tmp_name'])) {
@@ -36,16 +36,24 @@ try {
                                 } else {
                                     throw new Exception("Seleccione un archivo");
                                 }
+                            }else{
+                                throw new Exception("Ingrese la fecha del curso");
                             }
+                        }else{
+                            throw new Exception("Verifique el nombre del curso");
                         }
+                    }else{
+                        throw new Exception("Seleccione una institucion");
                     }
+                }else{
+                    throw new Exception("No se encontro el usuario");
                 }
                 break;
             case 'modificar':
-                if ($x->setCodiCursUsua($_POST['codiCursUsuaUpda'])) {
-                    if ($x->setCodiInsti($_POST['codiInstiUpda'])) {
-                        if ($x->setNombCurs($_POST['nombCursUpda'])) {
-                            if ($x->setFechCurs($_POST['fechCursUpda'])) {
+                if ($x->setCodiCursUsua($_POST['codiCursUsua'])) {
+                    if ($x->setCodiInst($_POST['codiInst'])) {
+                        if ($x->setNombCurs($_POST['nombCurs'])) {
+                            if ($x->setFechCurs($_POST['fechCurs'])) {
                                 if ($x->modificarCursoUsuario()) {
                                     throw new Exception('Exito');
                                 } else {
@@ -86,7 +94,7 @@ try {
                 break;
             case 'lista':
                 $data = null;
-                if ($x->setCodiUsua($_SESSION['codi_usua'])) {
+                if ($x->setCodiUsua($_POST['codiUsua'])) {
                     $data = $x->obtenerCursoUsuario();
                 }
                 echo json_encode($data);
@@ -94,7 +102,7 @@ try {
             case 'uno':
                 $data = null;
                 if ($x->setCodiCursUsua($_POST['codiCursUsua'])) {
-                    $data = $x->obtenerCursoUsuario();
+                    $data = $x->obtenerCursoUsuarioEspecifico();
                 }
                 echo json_encode($data);
                 break;

@@ -2,7 +2,7 @@
 //llamando el archivo app
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
-require_once APP_PATH . '/app/models/EmpresaController.php';
+require_once APP_PATH . '/app/models/Empresa.php';
 date_default_timezone_set("America/El_Salvador");
 session_start();
 try {
@@ -14,37 +14,33 @@ try {
         $_POST = $x->validateForm($_POST);
         //switch para verificar que accion es la que se va a realizar
         switch ($_POST['accion']) {
-            case 'crear':
+            case 'crearUsuarioEmpresa':
                 if ($x->setNombEmpr($_POST['nombEmpr'])) {
-                    if ($x->setDescEmpr($_POST['descEmpr'])) {
-                        if ($x->setDireEmpr($_POST['direEmpr'])) {
-                            if ($x->setFechFundEmpr($_POST['fechFundEmpr'])) {
-                                if ($x->setVisiEmpr($_POST['visiEmpr'])) {
-                                    if ($x->setMisiEmpr($_POST['misiEmpr'])) {
-                                        if ($x->setCodiEspe($_POST['codiEspe'])) {
-                                            if (is_uploaded_file($_FILES['logoEmpr']['tmp_name'])) {
-                                                if ($x->setImagen($_FILES['logoEmpr'])) {
-                                                    if ($x->crearEmpresa()) {
-                                                        throw new Exception('Exito');
-                                                    } else {
-                                                        if ($x->unsetImagen()) {
-                                                            throw new Exception(Database::getException());
-                                                        } else {
-                                                            throw new Exception("Elimine el imagen manualmente");
-                                                        }
-                                                    }
-                                                } else {
-                                                    throw new Exception($x->getImageError()());
-                                                }
-                                            } else {
-                                                throw new Exception("Seleccione un archivo");
-                                            }
+                    if (isset($_POST['codiSectEmpr'])) {
+                        if ($x->setCodiSect($_POST['codiSectEmpr'])) {
+                            if (is_uploaded_file($_FILES['logoEmpr']['tmp_name'])) {
+                                if ($x->setImagen($_FILES['logoEmpr'])) {
+                                    if ($x->crearEmpresa()) {
+                                        throw new  Exception(Database::getLastRowId());
+                                    } else {
+                                        if ($x->unsetImagen()) {
+                                            throw new Exception(Database::getException());
+                                        } else {
+                                            throw new Exception("Elimine el imagen manualmente");
                                         }
                                     }
+                                } else {
+                                    throw new Exception($x->getImageError()());
                                 }
+                            } else {
+                                throw new Exception("Seleccione un archivo");
                             }
                         }
-                    }
+                    } else {
+                        throw new Exception("Seleccione el sector al que la empresa pertenece");
+                     }
+                } else {
+                    throw new Exception("Verifique el nombre de la empresa");
                 }
                 break;
             case 'modificar':
@@ -90,7 +86,7 @@ try {
                 }
                 break;
             case 'lista':
-                    $data = $x->obtenerEmpresas()();
+                $data = $x->obtenerEmpresas();
                 echo json_encode($data);
                 break;
             case 'uno':

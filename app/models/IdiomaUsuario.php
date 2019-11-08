@@ -83,20 +83,20 @@ class IdiomaUsuario extends Validator
     }
     public function modificarIdiomaUsuario()
     {
-        $sql = "UPDATE idioma_usuario SET codi_idio=? codi_nive=? WHERE codi_idio_usua=?";
+        $sql = "UPDATE idioma_usuario SET codi_idio=?, codi_nive=? WHERE codi_idio_usua=?";
         $params = array($this->codi_idio, $this->codi_nive, $this->codi_idio_usua);
         return Database::executeRow($sql, $params);
     }
     public function eliminarIdiomaUsuario()
     {
-        $sql = "UPDATE esta_idio_usua=0 WHERE codi_idio_usua=?";
+        $sql = "UPDATE idioma_usuario SET esta_idio_usua=0 WHERE codi_idio_usua=?";
         $params = array($this->codi_idio_usua);
         return Database::executeRow($sql, $params);
     }
     public function obtenerListaIdiomaUsuario()
     {
-        $sql = "SELECT * FROM idioma_usuario WHERE esta_idio_usua=1 ORDER BY codi_idio";
-        $params = array(null);
+        $sql = "SELECT * FROM idioma_usuario INNER JOIN idioma ON idioma.codi_idio=idioma_usuario.codi_idio INNER JOIN nivel ON nivel.codi_nive_idio=idioma_usuario.codi_nive WHERE codi_usua=? AND esta_idio_usua=1";
+        $params = array($this->codi_usua);
         return Database::getRows($sql, $params);
     }
     public function obtenerIdiomaUsuario()

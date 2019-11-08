@@ -7,6 +7,9 @@ class EmpleoUsuario extends Validator
     private $codi_empl = null;
     private $codi_usua = null;
     private $moti_elim = null;
+    private $prue_usua = null;
+    private $cont_usua = null;
+    private $regl_usua = null;
     private $esta_empl_usua = null;
 
     // Encapsulando
@@ -63,6 +66,72 @@ class EmpleoUsuario extends Validator
     {
         return $this->moti_elim;
     }
+    public function setArchPrue($file)
+    {
+        if ($this->validateFile($file, $this->prue_usua, "../../web/prueba/")) {
+            $this->prue_usua = $this->getFileName();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getArchPrue()
+    {
+        return $this->prue_usua;
+    }
+    public function unsetArchPrue()
+    {
+        if (unlink("../../web/prueba/" . $this->prue_usua)) {
+            $this->prue_usua = null;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function setArchCont($file)
+    {
+        if ($this->validateFile($file, $this->cont_usua, "../../web/contrato/")) {
+            $this->contrato = $this->getFileName();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getArchCont()
+    {
+        return $this->cont_usua;
+    }
+    public function unsetArchCont()
+    {
+        if (unlink("../../web/contrato/" . $this->cont_usua)) {
+            $this->prue_usua = null;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function setArchRegl($file)
+    {
+        if ($this->validateFile($file, $this->regl_usua, "../../web/reglamento/")) {
+            $this->regl_usua = $this->getFileName();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getArchRegl()
+    {
+        return $this->regl_usua;
+    }
+    public function unsetArchRegl()
+    {
+        if (unlink("../../web/reglamento/" . $this->regl_usua)) {
+            $this->prue_usua = null;
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function setEstaEmplUsua($value)
     {
         if ($this->validateId($value)) {
@@ -85,20 +154,38 @@ class EmpleoUsuario extends Validator
     }
     public function eliminarEmpleoUsuario()
     {
-        $sql = "UPDATE empleo_usuario SET esta_cont_empl=0, moti_elim=?  WHERE codi_cont_empl=?";
-        $params = array($this->moti_elim,$this->codi_cont_empl);
+        $sql = "UPDATE empleo_usuario SET esta_empl_usua=0, moti_elim=?  WHERE codi_empl_usua=?";
+        $params = array($this->moti_elim,$this->codi_empl_usua);
         return Database::executeRow($sql, $params);
+    }
+    public function obtenerMiListaEmpleos()
+    {
+        $sql = "SELECT * FROM empleo_usuario INNER JOIN empleo ON empleo.codi_empl=empleo_usuario.codi_empl WHERE codi_usua=?";
+        $params = array($this->codi_usua);
+        return Database::getRows($sql, $params);
     }
     public function obtenerListaEmpleoUsuario()
     {
-        $sql = "SELECT * FROM empleo_usuario INNER JOIN usuario on usuario.codi_usua=empleo_usuario.codi_usua WHERE codi_empl=? AND esta_empl_usua=1";
+        $sql = "SELECT * FROM empleo_usuario INNER JOIN usuario on usuario.codi_usua=empleo_usuario.codi_usua WHERE codi_empl=? AND esta_empl_usua!=0";
         $params = array($this->codi_empl);
         return Database::getRows($sql, $params);
     }
-    public function obtenerContactoEmpleo()
+    public function modificarPrueba()
     {
-        $sql = "SELECT * FROM contacto_empleo WHERE codi_cont_empl=? AND esta_cont_empl=1";
-        $params = array($sql, $params);
-        return Database::getRow($sql, $params);
+        $sql = "UPDATE empleo_usuario SET prue_usua=? WHERE codi_empl_usua=?";
+        $params = array($this->prue_usua, $this->codi_empl_usua);
+        return Database::executeRow($sql, $params);
+    }
+    public function modificarContrato()
+    {
+        $sql = "UPDATE empleo_usuario SET cont_usua=? WHERE codi_empl_usua=?";
+        $params = array($this->cont_usua, $this->codi_empl_usua);
+        return Database::executeRow($sql, $params);
+    }
+    public function modificarReglamento()
+    {
+        $sql = "UPDATE empleo_usuario SET regl_usua=? WHERE codi_empl_usua=?";
+        $params = array($this->regl_usua, $this->codi_empl_usua);
+        return Database::executeRow($sql, $params);
     }
 }

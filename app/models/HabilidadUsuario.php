@@ -81,16 +81,28 @@ class HabilidadUsuario extends Validator
         $params = array($this->codi_usua, $this->codi_habi, $this->codi_nive);
         return Database::executeRow($sql, $params);
     }
+    public function modificarHabilidadUsuario()
+    {
+        $sql = "UPDATE habilidad_usuario SET codi_habi = ?, codi_nive = ? WHERE codi_habi_usua=?";
+        $params = array($this->codi_habi, $this->codi_nive, $this->codi_habi_usua);
+        return Database::executeRow($sql, $params);
+    }
     public function eliminarHabilidadUsuario()
     {
-        $sql = "UPDATE habilidad_usuario SET esta_habi_usua=0 WHERE codi_usua=?";
-        $params = array($this->codi_usua);
+        $sql = "UPDATE habilidad_usuario SET esta_habi_usua=0 WHERE codi_habi_usua=?";
+        $params = array($this->codi_habi_usua);
         return Database::executeRow($sql, $params);
     }
     public function obtenerListaHabilidadUsuario()
     {
-        $sql = "SELECT * FROM habilidad_usuario WHERE codi_usua=? AND esta_habi_usua=1 ORDER BY codi_habi";
+        $sql = "SELECT * FROM habilidad_usuario INNER JOIN habilidad ON habilidad.codi_habi=habilidad_usuario.codi_habi WHERE codi_usua=? AND esta_habi_usua=1";
         $params = array($this->codi_usua);
         return Database::getRows($sql, $params);
+    }
+    public function obtenerListaHabilidadUsuarioEspecifica()
+    {
+        $sql = "SELECT * FROM habilidad_usuario INNER JOIN habilidad ON habilidad.codi_habi=habilidad_usuario.codi_habi WHERE codi_habi_usua=?";
+        $params = array($this->codi_habi_usua);
+        return Database::getRow($sql, $params);
     }
 }

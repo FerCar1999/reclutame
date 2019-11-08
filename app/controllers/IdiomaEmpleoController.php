@@ -27,8 +27,23 @@ try {
                 }
                 break;
             case 'lista':
-                $data = $x->obtenerListaIdiomaEmpleo();
-                echo json_encode($data);
+                if ($x->setCodiEmpl($_POST['codiEmpl'])) {
+                    $data = $x->obtenerListaIdiomaEmpleo();
+                    echo json_encode($data);
+                }
+                break;
+            case 'verificarIdiomas':
+                if (isset($_SESSION['codi_usua'])) {
+                    $data = $x->verificarIdiomaUsuario($_SESSION['codi_usua'], $_POST['codiIdio']);
+                    if ($data['codi_idio'] > 0) {
+                        echo json_encode('Si');
+                    } else {
+                        echo json_encode('No');
+                    }
+                } else {
+                    echo json_encode('Si');
+                }
+
                 break;
         }
     }

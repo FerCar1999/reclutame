@@ -3,8 +3,8 @@ date_default_timezone_set('America/El_Salvador');
 //llamando archivos de configuracion y de usuario
 require_once '../../config/app.php';
 require_once APP_PATH . '/app/models/Usuario.php';
-require_once '../../config/generate_password.php';
-require '../../config/send_mail.php';
+require_once '../../config/generate_password.class.php';
+//require '../../config/send_mail.php';
 //activando una nueva sesion
 session_start();
 try {
@@ -21,16 +21,12 @@ try {
                                 $pass     = new generatorPassword();
                                 $password = $pass->generator();
                                 if ($user->setContUsua($password)) {
-                                    if ($user->setDireUsua($_POST['direUSua'])) {
-                                        if ($user->crearUsuario()) {
-                                            if (enviandoCorreoCuenta($_POST['correUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
-                                                throw new Exception('Exito');
-                                            } else {
-                                                throw new Exception('Exito');
-                                            }
-                                        }
-                                    } else {
-                                        throw new Exception('Verifique la direccion');
+                                    if ($user->crearUsuario()) {
+                                        //if (enviandoCorreoCuenta($_POST['corrUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
+                                        //throw new Exception('Exito');
+                                        //} else {
+                                        throw new Exception('Exito: ' . $password);
+                                        //}
                                     }
                                 } else {
                                     throw new Exception('La contraseña debe tener una longitud mayor a 6 digitos');
@@ -48,33 +44,31 @@ try {
                     throw new Exception('Verifique el nombre');
                 }
                 break;
-            case 'crearEmpresa':
+            case 'crearUsuarioEmpresa':
                 if ($user->setNombUsua($_POST['nombUsuaEmpr'])) {
                     if ($user->setApelUsua($_POST['apelUsuaEmpr'])) {
                         if ($user->setCorrUsua($_POST['corrUsuaEmpr'])) {
-                            $val = $user->verificarCorreoExistente();
-                            if ($val['conteo'] == 0) {
-                                $pass     = new generatorPassword();
-                                $password = $pass->generator();
-                                if ($user->setContUsua($password)) {
-                                    if ($user->setCodiEmpr($_POST['codiEmpr'])) {
-                                        if ($user->crearUsuario()) {
-                                            if (enviandoCorreoCuenta($_POST['correUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
-                                                throw new Exception('Exito');
-                                            } else {
-                                                throw new Exception('Exito');
-                                            }
-                                        } else {
-                                            throw new Exception('No se pudo agregar el usuario');
+                            if ($user->setCodiEmpr($_POST['codiEmpr'])) {
+                                $val = $user->verificarCorreoExistente();
+                                if ($val['conteo'] == 0) {
+                                    $pass     = new generatorPassword();
+                                    $password = $pass->generator();
+                                    if ($user->setContUsua($password)) {
+                                        if ($user->crearUsuarioEmpresa()) {
+                                            //if (enviandoCorreoCuenta($_POST['corrUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
+                                            //throw new Exception('Exito');
+                                            //} else {
+                                            throw new Exception('Exito: ' . $password);
+                                            //}
                                         }
                                     } else {
-                                        throw new Exception('No se encontro la empresa');
+                                        throw new Exception('La contraseña debe tener una longitud mayor a 6 digitos');
                                     }
                                 } else {
-                                    throw new Exception('La contraseña debe tener una longitud mayor a 6 digitos');
+                                    throw new Exception('Ya existe un usuario con ese correo');
                                 }
                             } else {
-                                throw new Exception('Ya existe un usuario con ese correo');
+                                throw new Exception('No se encontro la empresa, intentelo mas tarde');
                             }
                         } else {
                             throw new Exception('Verifique el correo');
@@ -186,9 +180,10 @@ try {
                                 $_SESSION['nomb_usua']      = $user->getNombUsua() . ' ' . $user->getApelUsua();
                                 $_SESSION['codi_tipo_usua'] = $user->getTipoUsua();
                                 $_SESSION['codi_empr']      = $user->getCodiEmpr();
+                                $_SESSION['foto_usua']      = $user->getImagen();
                                 //$_SESSION['nomb_casa']      = $user->getNombCasa();
                                 //$_SESSION['logo_casa']      = $user->getLogoCasa();
-                                throw new Exception("Exito");
+                                throw new Exception($_SESSION['codi_tipo_usua']);
                             } else {
                                 throw new Exception("Verifique sus credenciales");
                             }
@@ -215,6 +210,22 @@ try {
                     $data = $user->getInfoUsuario();
                 }
                 echo json_encode($data);
+                break;
+            case 'modificarAcercaDe':
+                if ($user->setCodiUsua($_SESSION['codi_usua'])) {
+                    if ($user->setDescUsua($_POST['descUsua'])) {
+                        if ($user->modificarDescripcion()) {
+                            throw new Exception('Exito');
+                        } else {
+                            throw new Exception('No se pudo modificar la descripcion');
+                        }
+                    } else {
+                        throw new Exception('Verifique la descripcion que ha agregado');
+                    }
+                } else {
+                    throw new Exception('No se encontro el usuario');
+                }
+
                 break;
         }
     }

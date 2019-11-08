@@ -6,7 +6,7 @@ class ExperienciaUsuario extends Validator
     private $codi_expe_usua = null;
     private $codi_empr = null;
     private $codi_usua = null;
-    private $codi_carg = null;
+    private $nomb_carg = null;
     private $desd_expe_usua = null;
     private $hast_expe_usua = null;
     private $esta_expe_usua = null;
@@ -25,18 +25,18 @@ class ExperienciaUsuario extends Validator
     {
         return $this->codi_expe_usua;
     }
-    public function setCodiExpe($value)
+    public function setCodiEmpr($value)
     {
         if ($this->validateId($value)) {
-            $this->codi_expe = $value;
+            $this->codi_empr = $value;
             return true;
         } else {
             return false;
         }
     }
-    public function getCodiExpe()
+    public function getCodiEmpr()
     {
-        return $this->codi_expe;
+        return $this->codi_empr;
     }
     public function setCodiUsua($value)
     {
@@ -51,18 +51,18 @@ class ExperienciaUsuario extends Validator
     {
         return $this->codi_usua;
     }
-    public function setCodiCarg($value)
+    public function setNombCarg($value)
     {
-        if ($this->validateId($value)) {
-            $this->codi_carg = $value;
+        if ($this->validateAlphanumeric($value,1,125)) {
+            $this->nomb_carg = $value;
             return true;
         } else {
             return false;
         }
     }
-    public function getCodiCarg()
+    public function getNombCarg()
     {
-        return $this->codi_carg;
+        return $this->nomb_carg;
     }
     public function setDesdExpeUsua($value)
     {
@@ -97,14 +97,14 @@ class ExperienciaUsuario extends Validator
     }
     public function crearExperienciaUsuario()
     {
-        $sql="INSERT INTO experiencia_usuario SET codi_empr, codi_usua, codi_carg, desd_expe_usua,hast_expe_usua VALUES(?,?,?,?,?)";
-        $params = array($this->codi_empr, $this->codi_usua, $this->codi_carg, $this->desd_expe_usua, $this->hast_expe_usua);
+        $sql="INSERT INTO experiencia_usuario(codi_empr, codi_usua, nomb_carg, desd_expe_usua,hast_expe_usua) VALUES(?,?,?,?,?)";
+        $params = array($this->codi_empr, $this->codi_usua, $this->nomb_carg, $this->desd_expe_usua, $this->hast_expe_usua);
         return Database::executeRow($sql, $params);
     }
     public function modificarExperienciaUsuario()
     {
-        $sql = "UPDATE experiencia_usuario SET codi_empr=?, codi_carg=?, desd_expe_usua=?, hast_expe_usua=? WHERE codi_expe_usua=?";
-        $params = array($this->codi_empr, $this->codi_carg, $this->desd_expe_usua, $this->hast_expe_usua, $this->codi_expe_usua);
+        $sql = "UPDATE experiencia_usuario SET codi_empr=?, nomb_carg=?, desd_expe_usua=?, hast_expe_usua=? WHERE codi_expe_usua=?";
+        $params = array($this->codi_empr, $this->nomb_carg, $this->desd_expe_usua, $this->hast_expe_usua, $this->codi_expe_usua);
         return Database::executeRow($sql, $params);
     }
     public function eliminarExperienciaUsuario()
@@ -115,7 +115,7 @@ class ExperienciaUsuario extends Validator
     }
     public function obtenerListaExperienciaUsuario()
     {
-        $sql = "SELECT * FROM experiencia_usuario WHERE esta_expe_usua=1 ORDER BY desd_expe_usua ASC";
+        $sql = "SELECT * FROM experiencia_usuario INNER JOIN empresa ON empresa.codi_empr=experiencia_usuario.codi_empr WHERE esta_expe_usua=1 ORDER BY desd_expe_usua ASC";
         $params = array(null);
         return Database::getRows($sql, $params);
     }

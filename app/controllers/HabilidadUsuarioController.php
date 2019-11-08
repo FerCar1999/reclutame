@@ -3,6 +3,7 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/HabilidadUsuario.php';
+session_start();
 try {
     $x = new HabilidadUsuario;
     if (isset($_POST['accion'])) {
@@ -19,6 +20,17 @@ try {
                     }
                 }
                 break;
+            case 'modificar':
+                if ($x->setCodiHabiUsua($_POST['codiHabiUsua'])) {
+                    if ($x->setCodiHabi($_POST['codiHabi'])) {
+                        if ($x->setCodiNive($_POST['codiNive'])) {
+                            if ($x->modificarHabilidadUsuario()) {
+                                throw new Exception('Exito');
+                            }
+                        }
+                    }
+                }
+                break;
             case 'eliminar':
                 if ($x->setCodiHabiUsua($_POST['codiHabiUsuaDele'])) {
                     if ($x->eliminarHabilidadUsuario()) {
@@ -28,8 +40,16 @@ try {
 
                 break;
             case 'lista':
-                $data = $x->obtenerListaHabilidadUsuario();
-                echo json_encode($data);
+                if ($x->setCodiUsua($_POST['codiUsua'])) {
+                    $data = $x->obtenerListaHabilidadUsuario();
+                    echo json_encode($data);
+                }
+                break;
+            case 'uno':
+                if ($x->setCodiHabiUsua($_POST['codiHabiUsua'])) {
+                    $data = $x->obtenerListaHabilidadUsuarioEspecifica();
+                    echo json_encode($data);
+                }
                 break;
         }
     }

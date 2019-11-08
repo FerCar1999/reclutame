@@ -3,6 +3,7 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/ExperienciaUsuario.php';
+session_start();
 try {
     $x = new ExperienciaUsuario;
     if (isset($_POST['accion'])) {
@@ -10,8 +11,8 @@ try {
         switch ($_POST['accion']) {
             case 'crear':
                 if ($x->setCodiEmpr($_POST['codiEmpr'])) {
-                    if ($x->setCodiUsua($_POST['codiUsua'])) {
-                        if ($x->setCodiCarg($_POST['codiCarg'])) {
+                    if ($x->setCodiUsua($_SESSION['codi_usua'])) {
+                        if ($x->setNombCarg($_POST['nombCarg'])) {
                             if ($x->setDesdExpeUsua($_POST['desdExpeUsua'])) {
                                 if ($x->setHastExpeUsua($_POST['hastExpeUsua'])) {
                                     if ($x->crearExperienciaUsuario()) {
@@ -26,11 +27,11 @@ try {
                 }
                 break;
             case 'modificar':
-                if ($x->setCodiEmpr($_POST['codiEmprUpda'])) {
-                    if ($x->setCodiExpeUsua($_POST['codiExpeUsuaUpda'])) {
-                        if ($x->setCodiCarg($_POST['codiCargUpda'])) {
-                            if ($x->setDesdExpeUsua($_POST['desdExpeUsuaUpda'])) {
-                                if ($x->setHastExpeUsua($_POST['hastExpeUsuaUpda'])) {
+                if ($x->setCodiEmpr($_POST['codiEmpr'])) {
+                    if ($x->setCodiExpeUsua($_POST['codiExpeUsua'])) {
+                        if ($x->setNombCarg($_POST['nombCarg'])) {
+                            if ($x->setDesdExpeUsua($_POST['desdExpeUsua'])) {
+                                if ($x->setHastExpeUsua($_POST['hastExpeUsua'])) {
                                     if ($x->modificarExperienciaUsuario()) {
                                         throw new Exception('Exito');
                                     }
@@ -51,7 +52,7 @@ try {
 
                 break;
             case 'lista':
-                $data = $x->obtenerListaExperienciaUsuario()();
+                $data = $x->obtenerListaExperienciaUsuario();
                 echo json_encode($data);
                 break;
             case 'uno':

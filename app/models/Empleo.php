@@ -77,7 +77,7 @@ class Empleo extends Validator
     }
     public function setNombEmpl($value)
     {
-        if ($this->validateAlphanumeric($value,1,250)) {
+        if ($this->validateAlphanumeric($value, 1, 250)) {
             $this->nomb_empl = $value;
             return true;
         } else {
@@ -90,7 +90,7 @@ class Empleo extends Validator
     }
     public function setUbicEmpl($value)
     {
-        if ($this->validateAlphanumeric($value,1,250)) {
+        if ($this->validateAlphanumeric($value, 1, 250)) {
             $this->ubic_empl = $value;
             return true;
         } else {
@@ -136,7 +136,7 @@ class Empleo extends Validator
     }
     public function setDescEmpl($value)
     {
-        if ($this->validateAlphanumeric($value,1,500)) {
+        if ($this->validateAlphanumeric($value, 1, 500)) {
             $this->desc_empl = $value;
             return true;
         } else {
@@ -149,8 +149,8 @@ class Empleo extends Validator
     }
     public function setSuelEmplInfe($value)
     {
-            $this->suel_empl_infe = $value;
-            return true;
+        $this->suel_empl_infe = $value;
+        return true;
     }
     public function getSuelEmplInfe()
     {
@@ -158,8 +158,8 @@ class Empleo extends Validator
     }
     public function setSuelEmplSupe($value)
     {
-            $this->suel_empl_supe = $value;
-            return true;
+        $this->suel_empl_supe = $value;
+        return true;
     }
     public function getSuelEmplSupe()
     {
@@ -222,13 +222,13 @@ class Empleo extends Validator
     public function crearEmpleo()
     {
         $sql = "INSERT INTO empleo(codi_empr, codi_expe, codi_tipo_empl,nomb_empl,ubic_empl, publ_inic_empl,publ_fina_empl,cant_soli_empl,desc_empl,suel_empl_infe,suel_empl_supe,gene_empl,edad_mini,edad_maxi) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $params = array($this->codi_empr, $this->codi_expe,$this->codi_tipo_empl,$this->nomb_empl,$this->ubic_empl,$this->publ_inic_empl,$this->publ_fina_empl,$this->cant_soli_empl,$this->desc_empl,$this->suel_empl_infe,$this->suel_empl_supe,$this->gene_empl,$this->edad_mini,$this->edad_maxi);
+        $params = array($this->codi_empr, $this->codi_expe, $this->codi_tipo_empl, $this->nomb_empl, $this->ubic_empl, $this->publ_inic_empl, $this->publ_fina_empl, $this->cant_soli_empl, $this->desc_empl, $this->suel_empl_infe, $this->suel_empl_supe, $this->gene_empl, $this->edad_mini, $this->edad_maxi);
         return Database::executeRow($sql, $params);
     }
     public function modificarEmpleo()
     {
         $sql = "UPDATE empleo SET codi_expe=?, codi_tipo_empl=?, nomb_empl=?, ubic_empl=?, publ_fina_empl=?, cant_soli_empl=?, desc_empl=?, suel_empl_infe=?, suel_empl_supe=?,gene_empl=?,edad_mini=?,edad_maxi=? WHERE codi_empl=?";
-        $params = array($this->codi_expe,$this->codi_tipo_empl,$this->nomb_empl,$this->ubic_empl,$this->publ_fina_empl,$this->cant_soli_empl,$this->desc_empl,$this->suel_empl_infe,$this->suel_empl_supe,$this->gene_empl,$this->edad_mini,$this->edad_maxi,$this->codi_empl);
+        $params = array($this->codi_expe, $this->codi_tipo_empl, $this->nomb_empl, $this->ubic_empl, $this->publ_fina_empl, $this->cant_soli_empl, $this->desc_empl, $this->suel_empl_infe, $this->suel_empl_supe, $this->gene_empl, $this->edad_mini, $this->edad_maxi, $this->codi_empl);
         return Database::executeRow($sql, $params);
     }
     public function eliminarEmpleo()
@@ -249,14 +249,15 @@ class Empleo extends Validator
         $params = array($fecha, $codi);
         return Database::getRows($sql, $params);
     }
-    public function obtenerEmpleosBusqueda($fecha, $texto)
+    public function obtenerEmpleosBusqueda($fecha, $texto, $ubicacion)
     {
         $sql = "SELECT * 
         FROM empleo 
         INNER JOIN empresa ON empresa.codi_empr=empleo.codi_empr 
-        WHERE publ_fina_empl>=? AND nomb_empl LIKE ".$texto." 
+        WHERE publ_fina_empl>=? AND nomb_empl LIKE " . $texto . " AND
+        ubic_empl LIKE " . $texto . " 
         ORDER BY publ_inic_empl DESC";
-        $params = array($fecha);
+        $params = array($fecha, $texto, $ubicacion);
         return Database::getRows($sql, $params);
     }
     public function obtenerEmpleo()

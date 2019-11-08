@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     obtenerEmpleos();
 });
 
@@ -10,21 +10,17 @@ function obtenerEmpleos() {
             accion: 'listaM'
         },
         dataType: "JSON",
-        success: function (data) {
-            $('#lista').empty()
+        success: function(data) {
+            $('#listaEmpleo').empty()
             for (let e = 0; e < data.length; e++) {
-                $('#lista').append('<li class="collection-item avatar">'+
-                '<img src="../web/img/logos/'+data[e].logo_empr+'" alt="ImagenEmpresa" class="circle">'+
-                '<span class="title">'+data[e].nomb_empl+'</span>'+
-                '<p>Empleo: '+data[e].nomb_empr+'<br>'+
-                data[e].desc_empl+
-                '</p>'+
-                '<a href="#verInformacionEmpleo" class="secondary-content modal-trigger" onclick="obtenerDetalleEmpleo('+data[e].codi_empl+');">Ver mas</a>'+
-                '</li>');
+                $('#listaEmpleo').append('<a onclick="obtenerDetalleEmpleo(' + data[e].codi_empl + ');">' +
+                    '<li class="list-group-item">' + data[e].nomb_empl + '</li>' +
+                    '</a>');
             }
         }
     });
 }
+
 function obtenerDetalleEmpleo(codi) {
     $.ajax({
         type: "POST",
@@ -34,15 +30,138 @@ function obtenerDetalleEmpleo(codi) {
             codiEmpl: codi
         },
         dataType: "JSON",
-        success: function (data) {
-            $('#lista2').empty()
+        success: function(data) {
+            $('#listaCandidatos').empty()
             for (let e = 0; e < data.length; e++) {
-                $('#lista2').append('<li class="collection-item avatar">'+
-                '<img src="../web/img/fotos/'+data[e].foto_usua+'" alt="ImagenUsua" class="circle">'+
-                '<span class="title">'+data[e].nomb_usua+' '+ data[e].apel_usua+'</span>'+
-                '<a href="#verInformacionEmpleo" class="secondary-content modal-trigger" onclick="obtenerDetalleEmpleo('+data[e].codi_empl+');">Ver mas</a>'+
-                '</li>');
+                $('#listaCandidatos').append('<a data-toggle="modal" data-target="#infoCandidato">' +
+                    '<li class="list-group-item">' + data[e].nomb_usua + ' ' + data[e].apel_usua + '</li>' +
+                    '</a>');
+                $('#codiEmplUsuaAct').val(data[e].codi_empl_usua);
             }
+        }
+    });
+}
+
+function eliminarProceso() {
+    var codigo = $('#codiEmplUsuaAct').val();
+    var motivo = $('#motivoElim').val();
+    $.ajax({
+        type: "POST",
+        url: "../app/controllers/EmpleoUsuarioController",
+        data: {
+            accion: 'eliminar',
+            codiEmplUsuaDele: codigo,
+            motiElim: motivo
+        },
+        success: function(data) {
+            obtenerEmpleos();
+        }
+    });
+}
+
+function agregarPrueba() {
+    var datos = new FormData($("#pruebas")[0]);
+    datos.append('codiEmplUsua', $('#codiEmplUsuaAct').val())
+    datos.append('archPrue', $("#pruebArchUsua")[0].files[0]);
+    datos.append('accion', 'agregarPrueba');
+    $.ajax({
+        url: '../app/controllers/EmpleoUsuarioController',
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        data: datos,
+        beforeSend: function() {},
+        success: function(data) {
+            var resp = data.indexOf("Exito");
+            if (resp >= 0) {
+                Swal.fire({
+                    type: 'success',
+                    title: 'Prueba agregada',
+                    text: 'La prueba fue registrada con exito'
+                });
+                obtenerEmpleos();
+            } else {
+                console.log(data)
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    text: JSON.parse(data)
+                });
+            }
+        },
+        error: function() {
+            errorAlert("Error al contactar con el servidor");
+        }
+    });
+}
+
+function agregarContrato() {
+    var datos = new FormData($("#contrato")[0]);
+    datos.append('codiEmplUsua', $('#codiEmplUsuaAct').val())
+    datos.append('archCont', $("#contratoArchUsua")[0].files[0]);
+    datos.append('accion', 'agregarContrato');
+    $.ajax({
+        url: '../app/controllers/EmpleoUsuarioController',
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        data: datos,
+        beforeSend: function() {},
+        success: function(data) {
+            var resp = data.indexOf("Exito");
+            if (resp >= 0) {
+                Swal.fire({
+                    type: 'success',
+                    title: 'Prueba agregada',
+                    text: 'La prueba fue registrada con exito'
+                });
+                obtenerEmpleos();
+            } else {
+                console.log(data);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    text: JSON.parse(data)
+                });
+            }
+        },
+        error: function() {
+            errorAlert("Error al contactar con el servidor");
+        }
+    });
+}
+
+function agregarReglamento() {
+    var datos = new FormData($("#reglamento")[0]);
+    datos.append('codiEmplUsua', $('#codiEmplUsuaAct').val())
+    datos.append('archRegl', $("#reglamentoArchUsua")[0].files[0]);
+    datos.append('accion', 'agregarReglamento');
+    $.ajax({
+        url: '../app/controllers/EmpleoUsuarioController',
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        data: datos,
+        beforeSend: function() {},
+        success: function(data) {
+            var resp = data.indexOf("Exito");
+            if (resp >= 0) {
+                Swal.fire({
+                    type: 'success',
+                    title: 'Prueba agregada',
+                    text: 'La prueba fue registrada con exito'
+                });
+                obtenerEmpleos();
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    text: JSON.parse(data)
+                });
+            }
+        },
+        error: function() {
+            errorAlert("Error al contactar con el servidor");
         }
     });
 }

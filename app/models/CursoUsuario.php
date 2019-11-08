@@ -5,7 +5,7 @@ class CursoUsuario extends Validator
     // Declaracion de propiedades
     private $codi_curs_usua = null;
     private $codi_usua = null;
-    private $codi_insti = null;
+    private $codi_inst = null;
     private $nomb_curs = null;
     private $fech_curs = null;
     private $arch_curs = null;
@@ -39,19 +39,19 @@ class CursoUsuario extends Validator
     {
         return $this->codi_usua;
     }
-    public function setCodiInsti($value)
+    public function setCodiInst($value)
     {
         if ($this->validateId($value)) {
-            $this->codi_insti = $value;
+            $this->codi_inst = $value;
             return true;
         } else {
             return false;
         }
     }
 
-    public function getCodiInsti()
+    public function getCodiInst()
     {
-        return $this->codi_insti;
+        return $this->codi_inst;
     }
     public function setNombCurs($value)
     {
@@ -114,15 +114,15 @@ class CursoUsuario extends Validator
 
     public function crearCursoUsuario()
     {
-        $sql = "INSERT INTO curso_usuario(codi_usua, codi_insti, nomb_curs, fech_curs, arch_curs) VALUES(?,?,?,?,?)";
-        $params = array($this->codi_usua, $this->codi_insti, $this->nomb_curs, $this->fech_curs, $this->arch_curs);
+        $sql = "INSERT INTO curso_usuario(codi_usua, codi_inst, nomb_curs, fech_curs, arch_curs) VALUES(?,?,?,?,?)";
+        $params = array($this->codi_usua, $this->codi_inst, $this->nomb_curs, $this->fech_curs, $this->arch_curs);
         return Database::executeRow($sql, $params);
     }
 
     public function modificarCursoUsuario()
     {
-        $sql = "UPDATE curso_usuario SET codi_insti=?, nomb_curs=?, fech_curs=? WHERE codi_curs_usua=?";
-        $params = array($this->codi_insti, $this->nomb_curs, $this->fech_curs, $this->codi_curs_usua);
+        $sql = "UPDATE curso_usuario SET codi_inst=?, nomb_curs=?, fech_curs=? WHERE codi_curs_usua=?";
+        $params = array($this->codi_inst, $this->nomb_curs, $this->fech_curs, $this->codi_curs_usua);
         return Database::executeRow($sql, $params);
     }
 
@@ -141,7 +141,7 @@ class CursoUsuario extends Validator
     }
     public function obtenerCursoUsuario()
     {
-        $sql = "SELECT * FROM curso_usuario WHERE codi_usua=? AND esta_curs=1";
+        $sql = "SELECT * FROM curso_usuario INNER JOIN instituciones ON instituciones.codi_inst=curso_usuario.codi_inst WHERE codi_usua=? AND esta_curs=1";
         $params = array($this->codi_usua);
         return Database::getRows($sql, $params);
     }

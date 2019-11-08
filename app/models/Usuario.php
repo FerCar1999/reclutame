@@ -33,7 +33,7 @@ class Usuario extends Validator
 
     public function setNombUsua($value)
     {
-        if ($this->validateAlphanumeric($value,1,100)) {
+        if ($this->validateAlphanumeric($value, 1, 100)) {
             $this->nomb_usua = $value;
             return true;
         } else {
@@ -46,7 +46,7 @@ class Usuario extends Validator
         return $this->nomb_usua;
     }
 
-public function setImagen($file)
+    public function setImagen($file)
     {
         if ($this->validateImage($file, $this->foto_usua, "../../web/img/fotos/", 1080, 1080)) {
             $this->logo_empr = $this->getImageName();
@@ -70,7 +70,7 @@ public function setImagen($file)
     }
     public function setApelUsua($value)
     {
-        if ($this->validateAlphanumeric($value,1,100)) {
+        if ($this->validateAlphanumeric($value, 1, 100)) {
             $this->apel_usua = $value;
             return true;
         } else {
@@ -84,7 +84,7 @@ public function setImagen($file)
     }
     public function setDireUsua($value)
     {
-        if ($this->validateAlphanumeric($value,1,500)) {
+        if ($this->validateAlphanumeric($value, 1, 500)) {
             $this->dire_usua = $value;
             return true;
         } else {
@@ -98,7 +98,7 @@ public function setImagen($file)
     }
     public function setDescUsua($value)
     {
-        if ($this->validateAlphanumeric($value,0,500)) {
+        if ($this->validateAlphanumeric($value, 0, 500)) {
             $this->desc_usua = $value;
             return true;
         } else {
@@ -143,8 +143,8 @@ public function setImagen($file)
 
     public function setCodiEmpr($value)
     {
-            $this->codi_empr = $value;
-            return true;
+        $this->codi_empr = $value;
+        return true;
     }
 
     public function getCodiEmpr()
@@ -154,7 +154,7 @@ public function setImagen($file)
 
     public function setTipoUsua($value)
     {
-        if($this->validateId($value)) {
+        if ($this->validateId($value)) {
             $this->codi_tipo_usua = $value;
             return true;
         } else {
@@ -166,7 +166,7 @@ public function setImagen($file)
     {
         return $this->codi_tipo_usua;
     }
-    
+
     public function setEstaUsua($value)
     {
         if ($this->validateId($value)) {
@@ -190,9 +190,9 @@ public function setImagen($file)
         //Encriptando la contraseña ingresada
         $hash   = password_hash($this->pass_usua, PASSWORD_DEFAULT);
         //realizando consuta
-        $sql    = "INSERT INTO usuario(codi_tipo_usua,nomb_usua,apel_usua,dire_usua,corr_usua, pass_usua) VALUES (?,?,?,?,?,?)";
+        $sql    = "INSERT INTO usuario(codi_tipo_usua,nomb_usua,apel_usua,corr_usua, pass_usua) VALUES (?,?,?,?,?)";
         //parametros a ingresar
-        $params = array(2,$this->nomb_usua,$this->apel_usua,$this->dire_usua,$this->pass_usua);
+        $params = array(2, $this->nomb_usua, $this->apel_usua, $this->corr_usua, $hash);
         return Database::executeRow($sql, $params);
     }
 
@@ -201,39 +201,41 @@ public function setImagen($file)
         //Encriptando la contraseña ingresada
         $hash   = password_hash($this->pass_usua, PASSWORD_DEFAULT);
         //realizando consuta
-        $sql    = "INSERT INTO usuario(codi_tipo_usua,codi_empr,nomb_usua,apel_usua,dire_usua,corr_usua, pass_usua) VALUES (?,?,?,?,?,?)";
+        $sql    = "INSERT INTO usuario(codi_tipo_usua,codi_empr,nomb_usua,apel_usua,corr_usua, pass_usua) VALUES (?,?,?,?,?,?)";
         //parametros a ingresar
-        $params = array(1,$this->codi_empr,$this->nomb_usua,$this->apel_usua,$this->dire_usua,$this->pass_usua);
+        $params = array(1, $this->codi_empr, $this->nomb_usua, $this->apel_usua, $this->corr_usua, $hash);
         return Database::executeRow($sql, $params);
     }
 
     //Verificar usuario login
     public function checkUser()
-	{
+    {
         //buscando datos del usuario con el correo ingresado
-		$sql = "SELECT * FROM usuario WHERE corr_usua=? AND esta_usua=1";
+        $sql = "SELECT * FROM usuario WHERE corr_usua=? AND esta_usua=1";
         //agregando parametros
         $params = array($this->corr_usua);
         //ejecutando consulta y obteniendo los datos
         $data = Database::getRow($sql, $params);
         //si hay datos de la consulta anterior
-		if($data){
+        if ($data) {
             //se setearan las variables de codigo de usuario y de tipo de usuario
             $this->codi_usua = $data['codi_usua'];
             $this->nomb_usua = $data['nomb_usua'];
             $this->apel_usua = $data['apel_usua'];
             $this->codi_tipo_usua = $data['codi_tipo_usua'];
             $this->codi_empr = $data['codi_empr'];
+            $this->foto_usua = $data['foto_usua'];
             //retornando true
-			return true;
-		}else{
+            return true;
+        } else {
             //retornando false
-			return false;
-		}
+            return false;
+        }
     }
-    
-	//verificando contraseña
-	public function checkPassword(){
+
+    //verificando contraseña
+    public function checkPassword()
+    {
         //preparando la consulta para traer la contraseña(encriptada) del usuario
         $sql = "SELECT pass_usua FROM usuario WHERE codi_usua = ?";
         //agregando parametros
@@ -249,14 +251,15 @@ public function setImagen($file)
     }
 
     //funcion para cerrar sesion
-    public function logOut(){
+    public function logOut()
+    {
         //destruyendo variables de sesion
-		return session_destroy();
+        return session_destroy();
     }
 
     // Modificar informacion de usuario
     public function updateInformacionUsuario()
-    {   
+    {
         $sql    = "UPDATE usuario SET nomb_usua = ?, apel_usua = ?, dire_usua = ?, corr_usua=? WHERE codi_usua = ?";
         $params = array($this->nomb_usua, $this->apel_usua, $this->dire_usua, $this->corr_usua, $this->codi_usua);
         return Database::executeRow($sql, $params);
@@ -311,6 +314,18 @@ public function setImagen($file)
     public function agregarDescripcion()
     {
         $sql = "UPDATE usuario SET desc_usua = ? WHERE codi_usua=?";
+        $params = array($this->desc_usua, $this->codi_usua);
+        return Database::executeRow($sql, $params);
+    }
+    public function getInfoUsuario()
+    {
+        $sql = "SELECT * FROM usuario WHERE codi_usua=?";
+        $params = array($this->codi_usua);
+        return Database::getRow($sql, $params);
+    }
+    public function modificarDescripcion()
+    {
+        $sql = "UPDATE usuario SET desc_usua=? WHERE codi_usua=?";
         $params = array($this->desc_usua, $this->codi_usua);
         return Database::executeRow($sql, $params);
     }

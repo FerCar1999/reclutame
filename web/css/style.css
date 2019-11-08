@@ -1,72 +1,42 @@
-input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #000000;
-    border-radius: 0;
-    outline: none;
-    height: 3rem;
-    width: 100%;
-    font-size: 16px;
-    margin: 0 0 8px 0;
-    padding: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-    -webkit-transition: border .3s, -webkit-box-shadow .3s;
-    transition: border .3s, -webkit-box-shadow .3s;
-    transition: box-shadow .3s, border .3s;
-    transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
-}
-input:not([type]):focus:not([readonly]) + label,
-input[type=text]:not(.browser-default):focus:not([readonly]) + label,
-input[type=password]:not(.browser-default):focus:not([readonly]) + label,
-input[type=email]:not(.browser-default):focus:not([readonly]) + label,
-input[type=url]:not(.browser-default):focus:not([readonly]) + label,
-input[type=time]:not(.browser-default):focus:not([readonly]) + label,
-input[type=date]:not(.browser-default):focus:not([readonly]) + label,
-input[type=datetime]:not(.browser-default):focus:not([readonly]) + label,
-input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,
-input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
-input[type=number]:not(.browser-default):focus:not([readonly]) + label,
-input[type=search]:not(.browser-default):focus:not([readonly]) + label,
-textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #C5CAE9;
-}
-input:not([type]):focus:not([readonly]),
-input[type=text]:not(.browser-default):focus:not([readonly]),
-input[type=password]:not(.browser-default):focus:not([readonly]),
-input[type=email]:not(.browser-default):focus:not([readonly]),
-input[type=url]:not(.browser-default):focus:not([readonly]),
-input[type=time]:not(.browser-default):focus:not([readonly]),
-input[type=date]:not(.browser-default):focus:not([readonly]),
-input[type=datetime]:not(.browser-default):focus:not([readonly]),
-input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
-input[type=tel]:not(.browser-default):focus:not([readonly]),
-input[type=number]:not(.browser-default):focus:not([readonly]),
-input[type=search]:not(.browser-default):focus:not([readonly]),
-textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #C5CAE9;
-  -webkit-box-shadow: 0 1px 0 0 #C5CAE9;
-          box-shadow: 0 1px 0 0 #C5CAE9;
-}
-.input-field>label{
-    color: #000000;
-}
-.select-wrapper .caret {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
-    z-index: 0;
-    fill: rgba(96,125,139);
-}
-.carousel {
-    height: 240px;
+body {
+    background-color: rgba(0, 105, 217, 0.8);
 }
 
-.modal{
-    width: 97%;
-    max-height: 90%;
+.img-thumbnail {
+    padding: 1.25rem;
+    background-color: #fff;
+    border: none;
+    margin: 2px;
+    max-width: 100%;
+    height: auto;
+}
+
+.titulo {
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 0.2;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
+.imagenOferta {
+    padding-top: 25%;
+}
+
+.registro {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 20px;
+}
+
+.login,
+.recordar {
+    padding-top: 50px;
+}
+
+.modalp {
+    padding: 10px;
 }

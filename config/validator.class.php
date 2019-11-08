@@ -157,7 +157,7 @@ class Validator
     }
     public function validateAlphanumeric($value, $minimum, $maximum)
     {
-        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ#\s\.,-]{" . $minimum . "," . $maximum . "}$/", $value)) {
+        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ#\s\.:;,-]{" . $minimum . "," . $maximum . "}$/", $value)) {
             return true;
         } else {
             return false;

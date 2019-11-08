@@ -11,7 +11,7 @@ class Empresa extends Validator
     private $logo_empr = null;
     private $visi_empr = null;
     private $misi_empr = null;
-    private $codi_espe = null;
+    private $codi_sect = null;
     private $esta_empr = null;
     // Encapsulando
     public function setCodiEmpr($value)
@@ -29,7 +29,7 @@ class Empresa extends Validator
     }
     public function setNombEmpr($value)
     {
-        if ($this->validateAlphanumeric($value,1,30)) {
+        if ($this->validateAlphanumeric($value, 1, 30)) {
             $this->nomb_empr = $value;
             return true;
         } else {
@@ -42,7 +42,7 @@ class Empresa extends Validator
     }
     public function setDescEmpr($value)
     {
-        if ($this->validateAlphanumeric($value,1,300)) {
+        if ($this->validateAlphanumeric($value, 1, 300)) {
             $this->desc_empr = $value;
             return true;
         } else {
@@ -55,7 +55,7 @@ class Empresa extends Validator
     }
     public function setDireEmpr($value)
     {
-        if ($this->validateAlphanumeric($value,1,400)) {
+        if ($this->validateAlphanumeric($value, 1, 400)) {
             $this->dire_empr = $value;
             return true;
         } else {
@@ -68,7 +68,7 @@ class Empresa extends Validator
     }
     public function setFechFundEmpr($value)
     {
-        $this->fech_fund_empr= $value;
+        $this->fech_fund_empr = $value;
         return true;
     }
     public function getFechFundEmpr()
@@ -77,7 +77,7 @@ class Empresa extends Validator
     }
     public function setImagen($file)
     {
-        if ($this->validateImage($file, $this->logo_empr, "../../web/img/logos/", 1080, 1080)) {
+        if ($this->validateImage($file, $this->logo_empr, "../../web/img/logos/", 3840, 2460)) {
             $this->logo_empr = $this->getImageName();
             return true;
         } else {
@@ -99,7 +99,7 @@ class Empresa extends Validator
     }
     public function setVisiEmpr($value)
     {
-        if ($this->validateAlphanumeric($value,1,500)) {
+        if ($this->validateAlphanumeric($value, 1, 500)) {
             $this->visi_empr = $value;
             return true;
         } else {
@@ -112,7 +112,7 @@ class Empresa extends Validator
     }
     public function setMisiEmpr($value)
     {
-        if ($this->validateAlphanumeric($value,1,500)) {
+        if ($this->validateAlphanumeric($value, 1, 500)) {
             $this->misi_empr = $value;
             return true;
         } else {
@@ -123,18 +123,18 @@ class Empresa extends Validator
     {
         return $this->misi_empr;
     }
-    public function setCodiEspe($value)
+    public function setCodiSect($value)
     {
         if ($this->validateId($value)) {
-            $this->codi_espe = $value;
+            $this->codi_sect = $value;
             return true;
         } else {
             return false;
         }
     }
-    public function getCodiEspe()
+    public function getCodiSect()
     {
-        return $this->codi_espe;
+        return $this->codi_sect;
     }
     public function setEstaEmpr($value)
     {
@@ -151,8 +151,8 @@ class Empresa extends Validator
     }
     public function crearEmpresa()
     {
-        $sql = "INSERT INTO empresa(nomb_empr, desc_empr,dire_empr,fech_fund_empr,logo_empr,visi_empr,misi_empr,codi_espe) VALUES(?,?,?,?,?,?,?,?)";
-        $params = array($this->nomb_empr, $this->desc_empr, $this->dire_empr, $this->fech_fund_empr, $this->logo_empr, $this->visi_empr, $this->misi_empr, $this->codi_espe);
+        $sql = "INSERT INTO empresa(nomb_empr,logo_empr, codi_sect) VALUES(?,?,?)";
+        $params = array($this->nomb_empr, $this->logo_empr, $this->codi_sect);
         return Database::executeRow($sql, $params);
     }
     public function modificarEmpresa()
@@ -165,7 +165,7 @@ class Empresa extends Validator
     {
         $sql = "SELECT * FROM empresa WHERE esta_empr=1 ORDER BY nomb_empr";
         $params = array(null);
-        return Database::getRows($sql,$params);
+        return Database::getRows($sql, $params);
     }
     public function obtenerEmpresa()
     {

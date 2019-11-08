@@ -89,8 +89,8 @@ class IdiomaEmpleo extends Validator
     }
     public function obtenerListaIdiomaEmpleo()
     {
-        $sql = "SELECT * FROM idioma_empleo WHERE esta_idio_empl=1 ORDER BY codi_idio";
-        $params = array(null);
+        $sql = "SELECT * FROM idioma_empleo INNER JOIN idioma ON idioma.codi_idio=idioma_empleo.codi_idio WHERE codi_empl=? AND esta_idio_empl=1";
+        $params = array($this->codi_empl);
         return Database::getRows($sql, $params);
     }
 }

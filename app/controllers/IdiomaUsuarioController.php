@@ -3,6 +3,7 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/IdiomaUsuario.php';
+session_start();
 try {
     $x = new IdiomaUsuario;
     if (isset($_POST['accion'])) {
@@ -19,6 +20,25 @@ try {
                     }
                 }
                 break;
+            case 'modificar':
+                if ($x->setCodiIdioUsua($_POST['codiIdioUsua'])) {
+                    if ($x->setCodiIdio($_POST['codiIdio'])) {
+                        if ($x->setCodiNive($_POST['codiNive'])) {
+                            if ($x->modificarIdiomaUsuario()) {
+                                throw new Exception('Exito');
+                            }else{
+                                throw new Exception('No se pudo modificar el registro');
+                            }
+                        }else{
+                            throw new Exception('Debe seleccionar el nivel');
+                        }
+                    }else{
+                        throw new Exception('Debe seleccionar el idioma');
+                    }
+                }else{
+                    throw new Exception('No se encontro el registro');
+                }
+                break;
             case 'eliminar':
                 if ($x->setCodiIdioUsua($_POST['codiIdioUsuaDele'])) {
                     if ($x->eliminarIdiomaUsuario()) {
@@ -27,8 +47,16 @@ try {
                 }
                 break;
             case 'lista':
-                $data = $x->obtenerListaIdiomaUsuario();
-                echo json_encode($data);
+                if ($x->setCodiUsua($_POST['codiUsua'])) {
+                    $data = $x->obtenerListaIdiomaUsuario();
+                    echo json_encode($data);
+                }
+                break;
+                case 'uno':
+                if ($x->setCodiIdioUsua($_POST['codiIdioUsua'])) {
+                    $data = $x->obtenerIdiomaUsuario();
+                    echo json_encode($data);
+                }
                 break;
         }
     }
