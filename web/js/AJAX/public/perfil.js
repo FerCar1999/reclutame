@@ -3,6 +3,7 @@ $(document).ready(function() {
     //CURSOS
     $('#fechCurs').datepicker(config);
     $("#fechCursUpda").datepicker(config);
+    $("#fechNaciUsua").datepicker(config);
     //EXPERIENCIA
     $("#desdExpeUsua").datepicker(config);
     $("#hastExpeUsua").datepicker(config);

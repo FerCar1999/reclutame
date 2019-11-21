@@ -91,7 +91,7 @@ class EmpleoUsuario extends Validator
     public function setArchCont($file)
     {
         if ($this->validateFile($file, $this->cont_usua, "../../web/contrato/")) {
-            $this->contrato = $this->getFileName();
+            $this->cont_usua = $this->getFileName();
             return true;
         } else {
             return false;
@@ -104,7 +104,7 @@ class EmpleoUsuario extends Validator
     public function unsetArchCont()
     {
         if (unlink("../../web/contrato/" . $this->cont_usua)) {
-            $this->prue_usua = null;
+            $this->cont_usua = null;
             return true;
         } else {
             return false;

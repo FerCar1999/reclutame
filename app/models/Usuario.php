@@ -13,6 +13,11 @@ class Usuario extends Validator
     private $pass_usua = null;
     private $foto_usua = null;
     private $desc_usua = null;
+    private $codi_esta_civi = null;
+    private $dui_usua = null;
+    private $nit_usua = null;
+    private $nup_usua = null;
+    private $fech_naci_usua = null;
     private $esta_usua = null;
 
     // Encapsulando
@@ -98,12 +103,8 @@ class Usuario extends Validator
     }
     public function setDescUsua($value)
     {
-        if ($this->validateAlphanumeric($value, 0, 500)) {
-            $this->desc_usua = $value;
-            return true;
-        } else {
-            return false;
-        }
+        $this->desc_usua = $value;
+        return true;
     }
 
     public function getDescUsua()
@@ -165,6 +166,66 @@ class Usuario extends Validator
     public function getTipoUsua()
     {
         return $this->codi_tipo_usua;
+    }
+
+    public function setCodiEstaCivi($value)
+    {
+        if ($this->validateId($value)) {
+            $this->codi_esta_civi = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCodiEstaCivi()
+    {
+        return $this->codi_esta_civi;
+    }
+
+    public function setDuiUsua($value)
+    {
+        if ($this->validateDUI($value)) {
+            $this->dui_usua = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getDuiUsua()
+    {
+        return $this->dui_usua;
+    }
+
+    public function setNitUsua($value)
+    {
+        if ($this->validateNIT($value)) {
+            $this->nit_usua = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getNitUsua()
+    {
+        return $this->nit_usua;
+    }
+
+    public function setNupUsua($value)
+    {
+        if ($this->validateNUP($value)) {
+            $this->nup_usua = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getNupUsua()
+    {
+        return $this->nup_usua;
     }
 
     public function setEstaUsua($value)
@@ -311,12 +372,6 @@ class Usuario extends Validator
         $params = array($this->foto_usua, $this->codi_usua);
         return Database::executeRow($sql, $params);
     }
-    public function agregarDescripcion()
-    {
-        $sql = "UPDATE usuario SET desc_usua = ? WHERE codi_usua=?";
-        $params = array($this->desc_usua, $this->codi_usua);
-        return Database::executeRow($sql, $params);
-    }
     public function getInfoUsuario()
     {
         $sql = "SELECT * FROM usuario WHERE codi_usua=?";
@@ -326,7 +381,7 @@ class Usuario extends Validator
     public function modificarDescripcion()
     {
         $sql = "UPDATE usuario SET desc_usua=? WHERE codi_usua=?";
-        $params = array($this->desc_usua, $this->codi_usua);
+        $params = array(nl2br($this->desc_usua), $this->codi_usua);
         return Database::executeRow($sql, $params);
     }
 }

@@ -151,8 +151,9 @@ class Empresa extends Validator
     }
     public function crearEmpresa()
     {
-        $sql = "INSERT INTO empresa(nomb_empr,logo_empr, codi_sect) VALUES(?,?,?)";
-        $params = array($this->nomb_empr, $this->logo_empr, $this->codi_sect);
+        $token = bin2hex(random_bytes(64));
+        $sql = "INSERT INTO empresa(nomb_empr,logo_empr, url_empr, codi_sect) VALUES(?,?,?,?)";
+        $params = array($this->nomb_empr, $this->logo_empr, $token, $this->codi_sect);
         return Database::executeRow($sql, $params);
     }
     public function modificarEmpresa()
@@ -172,5 +173,11 @@ class Empresa extends Validator
         $sql = "SELECT * FROM empresa WHERE codi_empr=? AND esta_empr=1";
         $params = array($this->codi_empr);
         return Database::getRow($sql, $params);
+    }
+    public function obtenerRecursoEmpresa()
+    {
+        $sql = "SELECT * FROM experiencia_usuario as eu INNER JOIN usuario as u ON u.codi_usua=eu.codi_usua WHERE eu.codi_empr=? AND eu.hast_expe_usua='Actualidad' ORDER BY eu.corr_expe";
+        $params = array($this->codi_empr);
+        return Database::getRows($sql, $params);
     }
 }

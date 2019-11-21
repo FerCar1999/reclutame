@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('.select2').select2()
     $('.collapse').collapse('hide');
     $('.dropdown-toggle').dropdown();
     $('.carousel').carousel();

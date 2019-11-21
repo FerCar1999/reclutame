@@ -37,6 +37,9 @@ function obtenerDetalleEmpleo(codi) {
                     '<li class="list-group-item">' + data[e].nomb_usua + ' ' + data[e].apel_usua + '</li>' +
                     '</a>');
                 $('#codiEmplUsuaAct').val(data[e].codi_empl_usua);
+                $('#pruebaArchivo').attr('href', '../web/prueba/' + data[e].prue_usua);
+                $('#contratoArchivo').attr('href', '../web/contrato/' + data[e].cont_usua);
+                $('#reglamentoArchivo').attr('href', '../web/reglamento/' + data[e].regl_usua);
             }
         }
     });

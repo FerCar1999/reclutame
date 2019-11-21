@@ -239,7 +239,7 @@ class Empleo extends Validator
     }
     public function obtenerEmpleos($fecha)
     {
-        $sql = "SELECT * FROM empleo INNER JOIN empresa ON empresa.codi_empr=empleo.codi_empr WHERE publ_fina_empl>=? ORDER BY publ_inic_empl DESC";
+        $sql = "SELECT * FROM empleo INNER JOIN empresa ON empresa.codi_empr=empleo.codi_empr WHERE publ_fina_empl>=? ORDER BY publ_inic_empl ASc";
         $params = array($fecha);
         return Database::getRows($sql, $params);
     }
@@ -254,10 +254,12 @@ class Empleo extends Validator
         $sql = "SELECT * 
         FROM empleo 
         INNER JOIN empresa ON empresa.codi_empr=empleo.codi_empr 
+        INNER JOIN experiencia ON experiencia.codi_expe=empleo.codi_expe 
+        INNER JOIN tipo_empleo ON tipo_empleo.codi_tipo_empl=empleo.codi_tipo_empl 
         WHERE publ_fina_empl>=? AND nomb_empl LIKE " . $texto . " AND
-        ubic_empl LIKE " . $texto . " 
+        ubic_empl LIKE " . $ubicacion . " 
         ORDER BY publ_inic_empl DESC";
-        $params = array($fecha, $texto, $ubicacion);
+        $params = array($fecha);
         return Database::getRows($sql, $params);
     }
     public function obtenerEmpleo()

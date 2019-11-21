@@ -9,7 +9,7 @@ class Validator
     public function validateForm($fields)
     {
         foreach ($fields as $index => $value) {
-            $value          = trim($value);
+            $value          = $value;
             $fields[$index] = htmlspecialchars($value);
         }
         return $fields;
@@ -117,7 +117,7 @@ class Validator
     }
     public function validateDate($value)
     {
-        if (!is_null($value)) {
+        if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $value)) {
             return true;
         } else {
             return false;
@@ -128,6 +128,30 @@ class Validator
         if (preg_match("/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/", $value)) {
             return true;
         } else {
+            return false;
+        }
+    }
+    public function validateDUI($value)
+    {
+        if (preg_match("/^\d{8}-\d{1}$/", $value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function validateNIT($value)
+    {
+        if (preg_match("/^\d{4}-\d{6}-\d{3}-\d{1}$/", $value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function validateNUP($value)
+    {
+        if (preg_match("/^\d{12}$/", $value)) {
+           return true;
+        }else{
             return false;
         }
     }

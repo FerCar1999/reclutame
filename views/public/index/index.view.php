@@ -30,26 +30,21 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="ubicFindEmpl">A dónde lo buscas?</label>
-                                                        <input type="text" class="form-control" id="ubicFindEmpl" name="ubicFindEmpl" placeholder="San Salvador, La Libertad...">
+                                                        <label>Por rango salarial ($)</label>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" id="salaMiniFindEmpl" name="salaMiniFindEmpl" placeholder="Salario Min..">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" id="salaMaxiFindEmpl" name="salaMaxiFindEmpl" placeholder="Salario Max..">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="ubicFindEmpl">A dónde lo buscas?</label>
-                                                        <input type="text" class="form-control" id="ubicFindEmpl" name="ubicFindEmpl" placeholder="San Salvador, La Libertad...">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="ubicFindEmpl">A dónde lo buscas?</label>
-                                                        <input type="text" class="form-control" id="ubicFindEmpl" name="ubicFindEmpl" placeholder="San Salvador, La Libertad...">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="ubicFindEmpl">A dónde lo buscas?</label>
-                                                        <input type="text" class="form-control" id="ubicFindEmpl" name="ubicFindEmpl" placeholder="San Salvador, La Libertad...">
+                                                        <label for="idioFindEmpl">Por Idioma</label>
+                                                        <select multiple name="idioFindEmpl" id="idioFindEmpl" class="select2-multiple" style="width: 100%;"></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -60,7 +55,7 @@
                             <div class="row">
                                 <div class="col">
                                     <br>
-                                    <button type="submit" class="btn btn-outline-primary btn-lg btn-block">Buscar Empleos</button>
+                                    <a class="btn btn-outline-primary btn-lg btn-block" onclick="buscadorEmpleos();">Buscar Empleos</a>
                                 </div>
                             </div>
                         </div>
@@ -84,30 +79,8 @@
                                 <h4>Empresas que trabajan con nosotros</h4>
                             </div>
                         </div>
-
-                        <div id="listadoEmpresas" class="text-center">
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                    <a href="empresa?user=">
-                                        <img src="<?= IMG_PATH ?>logos/coca.jpg" alt="empresa" class="img-thumbnail">
-                                    </a>
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                    <a href="empresa?user=">
-                                        <img src="<?= IMG_PATH ?>logos/coca.jpg" alt="empresa" class="img-thumbnail">
-                                    </a>
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                    <a href="empresa?user=">
-                                        <img src="<?= IMG_PATH ?>logos/coca.jpg" alt="empresa" class="img-thumbnail">
-                                    </a>
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                    <a href="empresa?user=">
-                                        <img src="<?= IMG_PATH ?>logos/coca.jpg" alt="empresa" class="img-thumbnail">
-                                    </a>
-                                </div>
-                            </div>
+                        <h6></h6>
+                        <div class="row text-center" id="listadoEmpresas">
                         </div>
                     </div>
                 </div>

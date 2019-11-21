@@ -87,7 +87,7 @@
                             </form>
                             <div class="row">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-outline-success" onclick="agregarReglamentp();">Agregar Reglamento</button>
+                                    <button type="button" class="btn btn-outline-success" onclick="agregarReglamento();">Agregar Reglamento</button>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <div class="container">
     <br>
-    <div class="row">
+    <div class="row shadow-lg">
         <div class="col-12 col-sm-12 bg-white">
             <div class="row container">
                 <div class="col-4 col-lg-2 col-xl-2">
@@ -93,6 +93,8 @@
                     </div>
                 </div>
             </div>
+            <br>
         </div>
     </div>
 </div>
+<br>

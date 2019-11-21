@@ -83,8 +83,8 @@ try {
             case 'agregarContrato':
                 if ($x->setCodiEmplUsua($_POST['codiEmplUsua'])) {
                     if (is_uploaded_file($_FILES['archCont']['tmp_name'])) {
-                        if ($x->setArchPrue($_FILES['archCont'])) {
-                            if ($x->modificarContrato()()) {
+                        if ($x->setArchCont($_FILES['archCont'])) {
+                            if ($x->modificarContrato()) {
                                 throw new Exception('Exito');
                             } else {
                                 if ($x->unsetArchCont()) {
@@ -104,7 +104,7 @@ try {
             case 'agregarReglamento':
                 if ($x->setCodiEmplUsua($_POST['codiEmplUsua'])) {
                     if (is_uploaded_file($_FILES['archRegl']['tmp_name'])) {
-                        if ($x->setArchPrue($_FILES['archRegl'])) {
+                        if ($x->setArchRegl($_FILES['archRegl'])) {
                             if ($x->modificarReglamento()) {
                                 throw new Exception('Exito');
                             } else {

@@ -27,6 +27,9 @@ if (isset($_SESSION['codi_usua']) && isset($_SESSION['codi_tipo_usua'])) {
                 <a class="nav-link registro" href="empleo">Mis Ofertas</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link registro" href="recurso" style="margin-left:10px;">Recurso Humano</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" onclick="cerrarSesion();">Cerrar Sesion</a>
             </li>
         </ul>

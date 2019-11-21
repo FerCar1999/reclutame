@@ -12,11 +12,13 @@ ini_set("date.timezone", "America/El_Salvador");
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?? '' ?></title>
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= WEB_PATH ?>css/select2.min.css">
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/style.css">
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/all.css">
     <script src="<?= WEB_PATH ?>js/jquery.js"></script>
     <script src="<?= WEB_PATH ?>js/bootstrap.min.js"></script>
     <script src="<?= WEB_PATH ?>js/popper.min.js"></script>
+    <script src="<?= WEB_PATH ?>js/select2.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/gijgo@1.9.13/js/messages/messages.es-es.js" type="text/javascript"></script>

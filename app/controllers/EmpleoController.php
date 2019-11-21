@@ -92,7 +92,7 @@ try {
                 echo json_encode($data);
                 break;
             case 'buscar':
-                $data = $x->obtenerEmpleosBusqueda(date('Y-m-d'),$_POST['nombEmpl']);
+                $data = $x->obtenerEmpleosBusqueda(date('Y-m-d'),$_POST['nombEmpl'],$_POST['ubicEmpl']);
                 echo json_encode($data);
                 break;
             case 'uno':

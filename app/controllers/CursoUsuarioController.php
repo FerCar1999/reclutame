@@ -36,16 +36,16 @@ try {
                                 } else {
                                     throw new Exception("Seleccione un archivo");
                                 }
-                            }else{
+                            } else {
                                 throw new Exception("Ingrese la fecha del curso");
                             }
-                        }else{
+                        } else {
                             throw new Exception("Verifique el nombre del curso");
                         }
-                    }else{
+                    } else {
                         throw new Exception("Seleccione una institucion");
                     }
-                }else{
+                } else {
                     throw new Exception("No se encontro el usuario");
                 }
                 break;
@@ -105,6 +105,42 @@ try {
                     $data = $x->obtenerCursoUsuarioEspecifico();
                 }
                 echo json_encode($data);
+                break;
+
+            case 'capacitacion':
+                if ($x->setCodiUsua($_POST['codiUsua'])) {
+                    if ($x->setCodiInst($_POST['codiInst'])) {
+                        if ($x->setNombCurs($_POST['nombCurs'])) {
+                            if ($x->setFechCurs($_POST['fechCurs'])) {
+                                if (is_uploaded_file($_FILES['archCurs']['tmp_name'])) {
+                                    if ($x->setArchCurs($_FILES['archCurs'])) {
+                                        if ($x->crearCursoUsuario()) {
+                                            throw new Exception('Exito');
+                                        } else {
+                                            if ($x->unsetArchCurs()) {
+                                                throw new Exception(Database::getException());
+                                            } else {
+                                                throw new Exception("Elimine el archivo manualmente");
+                                            }
+                                        }
+                                    } else {
+                                        throw new Exception($x->getFileError());
+                                    }
+                                } else {
+                                    throw new Exception("Seleccione un archivo");
+                                }
+                            } else {
+                                throw new Exception("Ingrese la fecha del curso");
+                            }
+                        } else {
+                            throw new Exception("Verifique el nombre del curso");
+                        }
+                    } else {
+                        throw new Exception("Seleccione una institucion");
+                    }
+                } else {
+                    throw new Exception("No se encontro el usuario");
+                }
                 break;
         }
     }

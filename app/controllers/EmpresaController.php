@@ -96,6 +96,13 @@ try {
                 }
                 echo json_encode($data);
                 break;
+            case 'recurso':
+                $data = null;
+                if ($x->setCodiEmpr($_SESSION['codi_empr'])) {
+                    $data = $x->obtenerRecursoEmpresa();
+                }
+                echo json_encode($data);
+            break;
         }
     }
 } catch (Exception $error) {
