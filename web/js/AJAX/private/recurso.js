@@ -46,7 +46,7 @@ function listaRecursos() {
                     '</li>' +
                     '</a>');
                 $('#idUsuario').val(x.codi_expe_usua);
-                $('#idUsuarioR').val(x.codi_usua);
+                //$('#idUsuarioR').val(x);
             });
         }
     });
@@ -57,6 +57,8 @@ function buscarInformacion(x) {
     buscarEvaluaciones(x);
     buscarCapacitaciones(x);
     buscarAusencias(x);
+    //$('#idUsuario').val(data[0].codi_expe_usua);
+    $('#idUsuarioR').val(x);
 }
 
 function buscarAsistencia(id) {
@@ -254,6 +256,51 @@ function agregarEvaluacion() {
         },
         error: function() {
             errorAlert("Error al contactar con el servidor");
+        }
+    });
+}
+
+function iat() {
+    $.ajax({
+        type: "POST",
+        url: "../app/controllers/AusenciaController",
+        data: {
+            accion: 'iat',
+            codi_usua: $('#idUsuarioR').val()
+        },
+        dataType: "JSON",
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}
+
+function iatr() {
+    $.ajax({
+        type: "POST",
+        url: "../app/controllers/AusenciaController",
+        data: {
+            accion: 'iatr',
+            codi_usua: $('#idUsuarioR').val()
+        },
+        dataType: "JSON",
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}
+
+function iatnr() {
+    $.ajax({
+        type: "POST",
+        url: "../app/controllers/AusenciaController",
+        data: {
+            accion: 'iatnr',
+            codi_usua: $('#idUsuarioR').val()
+        },
+        dataType: "JSON",
+        success: function(data) {
+            console.log(data);
         }
     });
 }

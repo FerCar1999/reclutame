@@ -31,8 +31,9 @@ function login() {
                         //quitando el login de la url
                         var ruta = url.replace('login', 'index')
                         var ruta2 = ruta.replace('public', 'private')
+                        console.log(ruta2)
                             //enviando al index de la pagina
-                        window.location.replace(ruta);
+                        window.location.replace(ruta2);
                         break;
                     case '2':
                         var url = window.location.pathname;

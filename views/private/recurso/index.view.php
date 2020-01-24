@@ -66,8 +66,16 @@
                                                 <a class="btn btn-primary btn-sm btn-block text-white" role="button" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar Ausencia</a>
                                             </div>
                                             <div class="col-12">
+                                            <br>
                                                 <ul class="list-group" id="listaAusencia">
                                                 </ul>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                            <br>
+                                                <a class="btn btn-primary btn-sm  text-white" role="button" onclick="iat();">IAT</a>
+                                                <a class="btn btn-primary btn-sm  text-white" role="button" onclick="iatr();">IATR</a>
+                                                <a class="btn btn-primary btn-sm text-white" role="button" onclick="iatnr();">IATNR</a>
                                             </div>
                                         </div>
                                     </div>

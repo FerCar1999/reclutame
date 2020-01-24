@@ -224,6 +224,16 @@ function aplicarOferta() {
                     title: 'Error',
                     text: JSON.parse(data)
                 });
+                var url = window.location.pathname;
+                var urlSplit = url.split("/");
+                var ruta = url.replace(urlSplit[urlSplit.length - 1], 'login');
+                console.log(ruta)
+                if (ruta.indexOf('private')) {
+                    var ruta2 = url.replace('private', 'public');
+                    //window.location.replace(ruta2);
+                } else {
+                    //window.location.replace(ruta);
+                }
             }
         }
     });

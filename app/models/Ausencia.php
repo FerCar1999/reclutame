@@ -170,4 +170,37 @@ class Ausencia extends Validator
         $params = array($x, $y);
         return Database::getRows($sql, $params);
     }
+    public function obtenerIAT($empresa, $empleado)
+    {
+        $sql = "SELECT eu.codi_expe_usua,
+        DATEDIFF(a.fech_fina_ause, a.fech_inic_ause) AS dias,
+        TIMEDIFF(a.hora_fina_ause, a.hora_inic_ause) AS horas,
+        TIMEDIFF(eu.hora_expe_fina, eu.hora_expe_inic) AS horasL FROM ausencia AS a 
+        INNER JOIN experiencia_usuario AS eu ON eu.codi_expe_usua=a.codi_expe 
+        WHERE eu.codi_empr=? AND eu.codi_usua=?";
+        $params = array($empresa, $empleado);
+        return Database::getRows($sql, $params);
+    }
+    public function obtenerIATR($empresa, $empleado)
+    {
+        $sql = "SELECT eu.codi_expe_usua,
+        DATEDIFF(a.fech_fina_ause, a.fech_inic_ause) AS dias,
+        TIMEDIFF(a.hora_fina_ause, a.hora_inic_ause) AS horas,
+        TIMEDIFF(eu.hora_expe_fina, eu.hora_expe_inic) AS horasL FROM ausencia AS a 
+        INNER JOIN experiencia_usuario AS eu ON eu.codi_expe_usua=a.codi_expe 
+        WHERE eu.codi_empr=? AND eu.codi_usua=? AND a.remu_ause=1";
+        $params = array($empresa, $empleado);
+        return Database::getRows($sql, $params);
+    }
+    public function obtenerIATNR($empresa, $empleado)
+    {
+        $sql = "SELECT eu.codi_expe_usua,
+        DATEDIFF(a.fech_fina_ause, a.fech_inic_ause) AS dias,
+        TIMEDIFF(a.hora_fina_ause, a.hora_inic_ause) AS horas,
+        TIMEDIFF(eu.hora_expe_fina, eu.hora_expe_inic) AS horasL FROM ausencia AS a 
+        INNER JOIN experiencia_usuario AS eu ON eu.codi_expe_usua=a.codi_expe 
+        WHERE eu.codi_empr=? AND eu.codi_usua=? AND a.remu_ause=0";
+        $params = array($empresa, $empleado);
+        return Database::getRows($sql, $params);
+    }
 }

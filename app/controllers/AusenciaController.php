@@ -29,7 +29,19 @@ try {
             case 'lista':
                 $data = $x->obtenerListaAusencia($_POST['codiExpe'], $_SESSION['codi_empr']);
                 echo json_encode($data);
-            break;
+                break;
+            case 'iat':
+                $data = $x->obtenerIAT($_SESSION['codi_empr'], $_POST['codi_usua']);
+                echo json_encode($data);
+                break;
+            case 'iatr':
+                $data = $x->obtenerIATR($_SESSION['codi_empr'], $_POST['codi_usua']);
+                echo json_encode($data);
+                break;
+            case 'iatnr':
+                $data = $x->obtenerIATNR($_SESSION['codi_empr'], $_POST['codi_usua']);
+                echo json_encode($data);
+                break;
         }
     }
 } catch (Exception $error) {

@@ -52,8 +52,11 @@ try {
 
                 break;
             case 'lista':
+                $data = null;
+                if($x->setCodiUsua($_SESSION['codi_usua'])){
                 $data = $x->obtenerListaExperienciaUsuario();
                 echo json_encode($data);
+                }
                 break;
             case 'uno':
                 $data = null;

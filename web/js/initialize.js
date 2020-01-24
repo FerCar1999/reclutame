@@ -19,8 +19,10 @@ function cerrarSesion() {
                 var urlSplit = url.split("/");
                 var ruta = url.replace(urlSplit[urlSplit.length - 1], 'login');
                 console.log(ruta)
-                if (ruta.indexOf('private')) {
-                    var ruta2 = url.replace('private', 'public');
+                var adonde = ruta.indexOf('private');
+                if (adonde >= 0) {
+                    var ruta2 = ruta.replace('private', 'public');
+                    console.log(ruta2)
                     window.location.replace(ruta2);
                 } else {
                     window.location.replace(ruta);

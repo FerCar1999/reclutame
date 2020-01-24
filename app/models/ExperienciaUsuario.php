@@ -115,8 +115,8 @@ class ExperienciaUsuario extends Validator
     }
     public function obtenerListaExperienciaUsuario()
     {
-        $sql = "SELECT * FROM experiencia_usuario INNER JOIN empresa ON empresa.codi_empr=experiencia_usuario.codi_empr WHERE esta_expe_usua=1 ORDER BY desd_expe_usua ASC";
-        $params = array(null);
+        $sql = "SELECT * FROM experiencia_usuario INNER JOIN empresa ON empresa.codi_empr=experiencia_usuario.codi_empr WHERE esta_expe_usua=1 AND codi_usua=? ORDER BY desd_expe_usua ASC";
+        $params = array($this->codi_usua);
         return Database::getRows($sql, $params);
     }
     public function obtenerExperienciaUsuario()
